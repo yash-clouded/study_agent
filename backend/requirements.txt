@@ -1,0 +1,22 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pymupdf
+langchain>=0.0.300
+openai
+faiss-cpu
+tqdm
+pydantic
+python-dotenv
+aiofiles
+requests
+
+# Community integrations for langchain (provides `langchain_community` package)
+langchain-community
+
+# Tokenizers used by OpenAI and some LangChain components
+tiktoken
+
+# OpenAI provider for LangChain (new package for ChatOpenAI and OpenAIEmbeddings)
+langchain-openai
+google-generativeai
