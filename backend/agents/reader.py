@@ -1,6 +1,6 @@
 # reader.py
 from utils.pdf_utils import extract_text_from_pdf
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 class ReaderAgent:
     def __init__(self, chunk_size=1000, chunk_overlap=200):

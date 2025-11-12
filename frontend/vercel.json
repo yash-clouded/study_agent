@@ -1,0 +1,16 @@
+{
+  "name": "study-agent-frontend",
+  "version": "1.0.0",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "env": {
+    "VITE_API_BASE_URL": {
+      "description": "Backend API URL",
+      "placeholder": "https://study-agent-backend.onrender.com",
+      "required": true
+    }
+  },
+  "framework": "vite",
+  "nodeVersion": "20.x"
+}

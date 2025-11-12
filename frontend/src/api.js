@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Default API instance with 5 minute timeout
 const API = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:8001",
   timeout: 300000, // 5 minutes (300,000 ms)
 });
 

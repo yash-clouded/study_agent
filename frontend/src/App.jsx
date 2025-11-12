@@ -7,9 +7,11 @@ import Chat from "./components/Chat";
 import { fetchFlashcards, fetchQuizzes, fetchPlanner } from "./api";
 
 export default function App(){
+  const [files, setFiles] = useState([]);
   const [flashcards, setFlashcards] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
   const [planner, setPlanner] = useState([]);
+  const [activeTab, setActiveTab] = useState("upload");
 
   const loadAll = async () => {
     try{
@@ -26,10 +28,8 @@ export default function App(){
 
   const addQuizzes = async () => {
     try {
-      // fetch quizzes from backend and merge uniquely by question text
       const resp = await fetchQuizzes();
       const newItems = resp.data || [];
-      // avoid duplicates by question text
       const existingQs = new Set(quizzes.map((q) => q.question));
       const toAdd = newItems.filter((q) => !existingQs.has(q.question));
       if (toAdd.length > 0) {
@@ -42,33 +42,181 @@ export default function App(){
 
   useEffect(()=>{ loadAll(); }, []);
 
+  const tabs = [
+    { id: "upload", label: "📤 Upload", icon: "📤" },
+    { id: "flashcards", label: "📚 Flashcards", icon: "📚" },
+    { id: "quizzes", label: "✅ Quizzes", icon: "✅" },
+    { id: "planner", label: "📅 Planner", icon: "📅" },
+    { id: "chat", label: "💬 Chat", icon: "💬" },
+  ];
+
   return (
-    <div style={{ padding: 20, fontFamily: "Inter, sans-serif" }}>
-      <h1>Study Agent Dashboard</h1>
-      <UploadPanel onDone={loadAll}/>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
-        <div>
-          <h2>Flashcards</h2>
-          <Flashcards cards={flashcards} />
+    <div style={styles.app}>
+      {/* Header */}
+      <header style={styles.header}>
+        <div style={styles.headerContent}>
+          <div style={styles.logo}>
+            <span style={styles.logoIcon}>📖</span>
+            <h1 style={styles.logoText}>Study Agent</h1>
+          </div>
+          <p style={styles.subtitle}>AI-Powered Learning Assistant</p>
         </div>
-        <div>
-          <h2 style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            Quizzes
-            <button onClick={addQuizzes} style={{ padding: "6px 10px", fontSize: 14 }}>
-              Add quiz
+      </header>
+
+      {/* Navigation Tabs */}
+      <nav style={styles.nav}>
+        <div style={styles.navContent}>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                ...styles.navTab,
+                ...(activeTab === tab.id ? styles.navTabActive : {}),
+              }}
+            >
+              <span style={styles.navTabLabel}>{tab.label}</span>
             </button>
-          </h2>
-          <Quizzes quizzes={quizzes} />
+          ))}
         </div>
-      </div>
-      <div style={{ marginTop: 20 }}>
-        <h2>Planner</h2>
-        <Planner plan={planner} />
-      </div>
-      <div style={{ marginTop: 20 }}>
-        <h2>Ask a Doubt</h2>
-        <Chat />
-      </div>
+      </nav>
+
+      {/* Main Content */}
+      <main style={styles.main}>
+        {activeTab === "upload" && <UploadPanel files={files} setFiles={setFiles} onDone={() => { loadAll(); setActiveTab("flashcards"); }} />}
+        {activeTab === "flashcards" && <Flashcards cards={flashcards} />}
+        {activeTab === "quizzes" && (
+          <div>
+            <div style={styles.tabHeader}>
+              <h2 style={styles.tabTitle}>Quizzes</h2>
+              <button onClick={addQuizzes} style={styles.addButton}>
+                + Add Quiz
+              </button>
+            </div>
+            <Quizzes quizzes={quizzes} />
+          </div>
+        )}
+        {activeTab === "planner" && <Planner plan={planner} />}
+        {activeTab === "chat" && <Chat />}
+      </main>
+
+      {/* Footer */}
+      <footer style={styles.footer}>
+        <p>Study Agent • AI-powered learning for smarter studying</p>
+      </footer>
     </div>
   );
 }
+
+const styles = {
+  app: {
+    minHeight: "100vh",
+    backgroundColor: "#fafafa",
+    display: "flex",
+    flexDirection: "column",
+    fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+  },
+  header: {
+    backgroundColor: "#0066ff",
+    color: "white",
+    padding: "32px 20px",
+    boxShadow: "0 2px 8px rgba(0,102,255,0.15)",
+  },
+  headerContent: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+  },
+  logo: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    marginBottom: "8px",
+  },
+  logoIcon: {
+    fontSize: "32px",
+  },
+  logoText: {
+    fontSize: "28px",
+    fontWeight: "700",
+    margin: "0",
+  },
+  subtitle: {
+    fontSize: "14px",
+    opacity: "0.9",
+    margin: "0",
+  },
+  nav: {
+    backgroundColor: "white",
+    borderBottom: "1px solid #e0e0e0",
+    stickyPosition: "sticky",
+    top: "0",
+    zIndex: "100",
+  },
+  navContent: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "0 20px",
+    display: "flex",
+    gap: "0",
+  },
+  navTab: {
+    padding: "16px 20px",
+    backgroundColor: "transparent",
+    border: "none",
+    fontSize: "14px",
+    fontWeight: "600",
+    color: "#666",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    borderBottom: "3px solid transparent",
+    marginBottom: "-1px",
+  },
+  navTabActive: {
+    color: "#0066ff",
+    borderBottomColor: "#0066ff",
+    backgroundColor: "#f9f9f9",
+  },
+  navTabLabel: {
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+  },
+  main: {
+    flex: "1",
+    maxWidth: "1200px",
+    margin: "0 auto",
+    width: "100%",
+    padding: "20px",
+  },
+  tabHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "24px",
+  },
+  tabTitle: {
+    fontSize: "28px",
+    fontWeight: "700",
+    color: "#1a1a1a",
+    margin: "0",
+  },
+  addButton: {
+    padding: "10px 20px",
+    backgroundColor: "#0066ff",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    fontSize: "14px",
+    fontWeight: "600",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+  },
+  footer: {
+    backgroundColor: "#1a1a1a",
+    color: "#999",
+    textAlign: "center",
+    padding: "20px",
+    fontSize: "12px",
+    marginTop: "auto",
+  },
+};

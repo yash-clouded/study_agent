@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: study-agent-backend
+    env: python
+    plan: free
+    runtime: python-3.11
+    
+    # GitHub Repository
+    repo: https://github.com/yash-clouded/study_agent
+    branch: main
+    rootDir: backend
+    
+    # Build Configuration
+    buildCommand: |
+      pip install --upgrade pip setuptools wheel
+      pip install -r requirements.txt
+    
+    # Start Command - FastAPI with Uvicorn
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    
+    # Environment Variables (set these in Render dashboard)
+    envVars:
+      # LLM Configuration
+      - key: OLLAMA_MODEL
+        value: mistral
+      - key: OLLAMA_BASE_URL
+        value: http://localhost:11434
+      
+      # File paths
+      - key: FAISS_INDEX_PATH
+        scope: RUN_AND_BUILD
+        value: /opt/render/project/backend/outputs/faiss_index
+      
+      # Fallback providers (add via Render dashboard)
+      # GOOGLE_API_KEY - Set in Render dashboard
+      # OPENAI_API_KEY - Set in Render dashboard (optional, fallback only)
+    
+    # Persistent Disk for FAISS Vector Store and Outputs
+    disk:
+      name: faiss-storage
+      mountPath: /opt/render/project/backend/outputs
+      sizeGB: 5
+    
+    # Healthcheck
+    healthCheckPath: /health
+    
+    # Timeouts
+    buildTimeout: 30
+    deployTimeout: 30
+    shutdownTimeoutSeconds: 120
+    
+    # Auto-redeploy on git push
+    autoDeploy: true
+    
+    # Keep-alive (free tier)
+    # Note: Free tier services spin down after 15 min of inactivity
+    # This is normal behavior and will auto-spin-up on next request

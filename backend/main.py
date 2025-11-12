@@ -10,11 +10,12 @@ from agents.quiz import QuizAgent
 from agents.planner import PlannerAgent
 from agents.chat_agent import ChatAgent
 
-from langchain_openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.docstore.document import Document
-from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import OllamaEmbeddings
+from langchain_text_splitters import CharacterTextSplitter
+from langchain_core.documents import Document
 
 from dotenv import load_dotenv
 import sys
@@ -23,21 +24,22 @@ from utils.google_llm import create_google_llm
 from utils.ollama_llm import create_ollama_llm
 
 # Load environment variables from .env file explicitly
-env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
-load_dotenv(dotenv_path=env_path)
+# Try root .env first, then backend/.env
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+root_env_path = os.path.join(backend_dir, '..', '.env')
+backend_env_path = os.path.join(backend_dir, '.env')
+
+if os.path.exists(root_env_path):
+    load_dotenv(dotenv_path=root_env_path)
+elif os.path.exists(backend_env_path):
+    load_dotenv(dotenv_path=backend_env_path)
 
 # Check for API keys and LLM preferences
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 USE_OLLAMA = os.environ.get("USE_OLLAMA", "false").lower() == "true"
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "mistral")
-
-# Determine which LLM to use: priority order is Ollama > Google Gemini > OpenAI
-USE_GOOGLE = bool(GOOGLE_API_KEY) and not USE_OLLAMA
-USE_OPENAI = bool(OPENAI_API_KEY) and not USE_GOOGLE and not USE_OLLAMA
-
-if not (USE_GOOGLE or USE_OPENAI or USE_OLLAMA):
-    raise Exception("Set either GOOGLE_API_KEY, OPENAI_API_KEY, or USE_OLLAMA=true in environment")
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 
 FAISS_INDEX_PATH = os.environ.get("FAISS_INDEX_PATH", "./outputs/faiss_index")
 
@@ -52,29 +54,72 @@ app.add_middleware(
 # instantiate agents
 reader = ReaderAgent()
 
-# Choose LLM provider: Ollama if enabled, then Google Gemini, fallback to OpenAI
-if USE_OLLAMA:
-    try:
-        print(f"***Using Ollama as LLM provider with model: {OLLAMA_MODEL}")
-        llm = create_ollama_llm(model=OLLAMA_MODEL)
-    except RuntimeError as e:
-        print(f"***Ollama error: {e}")
-        print("***Falling back to Google Gemini or OpenAI...")
-        if USE_GOOGLE:
-            print("***Using Google Gemini as fallback")
-            llm = create_google_llm()
-        else:
-            print("***Using OpenAI as fallback")
-            llm = ChatOpenAI(model_name=os.environ.get("LLM_MODEL", "gpt-4o-mini"), temperature=0.1)
-elif USE_GOOGLE:
-    print("***Using Google Gemini as LLM provider")
-    llm = create_google_llm()
-else:
-    print("***Using OpenAI as LLM provider")
-    llm = ChatOpenAI(model_name=os.environ.get("LLM_MODEL", "gpt-4o-mini"), temperature=0.1)
+# Three-tier LLM provider selection with automatic fallback:
+# 1. Primary: Ollama (local, free, no API keys needed)
+# 2. Secondary: Google Gemini (cheap, free tier available)
+# 3. Tertiary: OpenAI (paid, as last resort)
 
-# Always use OpenAI embeddings (for now, unless you also configure Google embeddings)
-embeddings = OpenAIEmbeddings()
+llm = None
+embeddings = None
+active_provider = None
+
+# Tier 1: Try Ollama first (if enabled or available)
+if USE_OLLAMA or True:  # Always try Ollama first
+    try:
+        print(f"🔵 Attempting Tier 1 (Ollama) with model: {OLLAMA_MODEL}")
+        llm = create_ollama_llm(model=OLLAMA_MODEL)
+        # Use Ollama embeddings (local, free, no quota limits!)
+        embeddings = OllamaEmbeddings(model=OLLAMA_MODEL, base_url=OLLAMA_BASE_URL)
+        active_provider = "Ollama"
+        print(f"✅ SUCCESS: Using Ollama as LLM provider with model: {OLLAMA_MODEL}")
+        print(f"📊 Embedding Model: Ollama Embeddings (local, zero quota cost!)")
+    except Exception as e:
+        print(f"❌ Ollama Tier 1 failed: {e}")
+        llm = None
+        embeddings = None
+
+# Tier 2: If Ollama failed, try Google Gemini
+if llm is None and GOOGLE_API_KEY:
+    try:
+        print(f"🔵 Attempting Tier 2 (Google Gemini)")
+        llm = create_google_llm()
+        embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        active_provider = "Google Gemini"
+        print(f"✅ SUCCESS: Using Google Gemini as LLM provider")
+        print(f"📊 Embedding Model: Google Embeddings (models/embedding-001)")
+    except Exception as e:
+        print(f"❌ Google Gemini Tier 2 failed: {e}")
+        llm = None
+        embeddings = None
+
+# Tier 3: If Google failed, try OpenAI
+if llm is None and OPENAI_API_KEY:
+    try:
+        print(f"🔵 Attempting Tier 3 (OpenAI)")
+        llm = ChatOpenAI(model_name=os.environ.get("LLM_MODEL", "gpt-4o-mini"), temperature=0.1)
+        embeddings = OpenAIEmbeddings()
+        active_provider = "OpenAI"
+        print(f"✅ SUCCESS: Using OpenAI as LLM provider")
+        print(f"📊 Embedding Model: OpenAI Embeddings")
+    except Exception as e:
+        print(f"❌ OpenAI Tier 3 failed: {e}")
+        llm = None
+        embeddings = None
+
+# If all tiers failed, raise error
+if llm is None:
+    error_msg = (
+        "❌ All LLM providers unavailable:\n"
+        "  • Ollama: Not running or inaccessible\n"
+        "  • Google Gemini: GOOGLE_API_KEY not set\n"
+        "  • OpenAI: OPENAI_API_KEY not set\n"
+        "Please ensure at least one provider is available."
+    )
+    print(error_msg)
+    raise Exception(error_msg)
+
+print(f"\n🎯 Active Provider: {active_provider}")
+print(f"📊 Embedding Model: {embeddings.__class__.__name__}\n")
 
 # Instantiate agents - they will use the LLM we created
 flash_agent = FlashcardAgent(llm=llm)
@@ -222,21 +267,29 @@ async def chat(req: ChatRequest):
     # Allow dangerous deserialization for the same reason as above: the index
     # was created locally by this service. Do NOT enable this if loading files
     # from untrusted sources.
+    print("***Loading FAISS index for chat...")
     db = FAISS.load_local(FAISS_INDEX_PATH, embeddings, allow_dangerous_deserialization=True)
+    print("***FAISS index loaded for chat.")
     retriever = db.as_retriever(search_kwargs={"k": 3})
+    print("***Building chat chain...")
     chain = chat_agent.build_chain(retriever)
     inputs = {"question": req.question, "chat_history": req.chat_history}
+    print(f"***Chat inputs: {inputs}")
     # Validate and run the chain; provide a clearer error if inputs are wrong
     try:
         res = chain(inputs)
+        print(f"***Chat chain result: {res}")
     except ValueError as e:
         # Include expected vs provided keys to help debugging
         expected = getattr(chain, "input_keys", None)
         provided = list(inputs.keys())
         msg = f"Chain input validation error: {e}. expected_keys={expected}, provided_keys={provided}"
         raise HTTPException(status_code=400, detail=msg)
-
-    answer = res.get("answer")
+    except Exception as e:
+        print(f"***Chat chain unexpected error: {e}")
+        raise HTTPException(status_code=500, detail=f"Error during chat processing: {e}")
+    answer = res.get("output_text") or res.get("answer")
+    print(f"***Chat answer: {answer}")
     docs = res.get("source_documents", [])
     sources = [d.page_content[:400] for d in docs]
     return {"answer": answer, "sources": sources}

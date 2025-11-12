@@ -1,7 +1,7 @@
 # flashcard.py
 import json
 import re
-from langchain import LLMChain, PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
 # Use absolute import for the utils module
@@ -46,7 +46,9 @@ class FlashcardAgent:
             self.chain = None
         else:
             self.llm = llm
-            self.chain = LLMChain(llm=self.llm, prompt=PromptTemplate.from_template(FLASH_PROMPT))
+            # Use modern LangChain pattern: prompt | llm
+            prompt = PromptTemplate.from_template(FLASH_PROMPT)
+            self.chain = prompt | self.llm
 
     def _response_to_text(self, resp):
         """
@@ -86,7 +88,9 @@ class FlashcardAgent:
                 if self.chain is None:
                     resp = self.llm.predict(FLASH_PROMPT.replace("{chunk}", c))
                 else:
-                    resp = self.chain.predict(chunk=c)
+                    # Use invoke with modern LangChain (prompt | llm)
+                    result = self.chain.invoke({"chunk": c})
+                    resp = result.content if hasattr(result, 'content') else str(result)
             except Exception as e:
                 print("***FlashcardAgent exception during prediction/invocation", e)
                 resp = ""

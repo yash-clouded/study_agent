@@ -1,6 +1,6 @@
 [
   {
-    "question": "What event is being celebrated on August 15th in this speech?",
+    "question": "What is the day being celebrated in the speech?",
     "options": [
       "New Year's Day",
       "Republic Day",
@@ -10,93 +10,128 @@
     "answer": "Independence Day"
   },
   {
-    "question": "Who unfurled the tri-color flag on Red Fort on Independence Day in 1947?",
+    "question": "Who unfurled the tri-colour on the first Independence Day of India?",
     "options": [
       "Mahatma Gandhi",
       "Pt. Jawaharlal Nehru",
       "Subhas Chandra Bose",
-      "B.R. Ambedkar"
+      "B. R. Ambedkar"
     ],
     "answer": "Pt. Jawaharlal Nehru"
   },
   {
-    "question": "Which of the following individuals is NOT mentioned in this speech as being present on Independence Day?",
+    "question": "In which city did Pt. Jawaharlal Nehru unfurl the tri-colour on the first Independence Day?",
     "options": [
-      "Dr. N. T. Jose",
-      "Prof. Amitava Mitra",
-      "B.R. Ambedkar",
-      "Subhas Chandra Bose"
+      "New Delhi",
+      "Mumbai",
+      "Bangalore",
+      "Calcutta"
     ],
-    "answer": "B.R. Ambedkar"
+    "answer": "New Delhi"
   },
   {
-    "question": "Which of the following is NOT a role mentioned in this speech on Independence Day?",
+    "question": "On which fort was the tri-colour unfurled by Pt. Jawaharlal Nehru?",
     "options": [
-      "Campus dweller",
-      "Teacher",
-      "Cleaning staff",
-      "Head chef"
+      "Red Fort",
+      "Golden Temple",
+      "Taj Mahal",
+      "Gateway of India"
     ],
-    "answer": "Head chef"
+    "answer": "Red Fort"
   },
   {
-    "question": "What is the significance of August 15th in this speech?",
+    "question": "What is the occasion mentioned for remembering the contributions made by freedom fighters?",
     "options": [
-      "It marks the founding of the Republic of India",
-      "It celebrates the birth of Pt. Jawaharlal Nehru",
-      "It commemorates the contributions of freedom fighters",
-      "It honors the labor movement"
+      "New Year's Day",
+      "Independence Day",
+      "Republic Day",
+      "Labor Day"
     ],
-    "answer": "It commemorates the contributions of freedom fighters"
+    "answer": "Independence Day"
   },
   {
-    "question": "Who/What is everyone worthy to be remembered, celebrated and paid homage for in this context?",
+    "question": "What does 'Government' refer to in this context?",
     "options": [
-      "Foreign invaders",
-      "Doctors, nurses, paramedics and health workers fighting Covid-19",
-      "The British Empire",
-      "Participants in the freedom struggle"
+      "The British Government during the colonial period",
+      "The Indian Government today",
+      "The government of the freedom fighters during the struggle for independence",
+      "A government that represents all common people who participated in the freedom struggle"
     ],
-    "answer": "Participants in the freedom struggle"
+    "answer": "A"
   },
   {
-    "question": "For whom is the nation expected to recognize sacrifice 'in a fitting manner'?",
+    "question": "What is the significance of the 15th August in India's history?",
     "options": [
-      "Foreign invaders",
-      "Doctors, nurses, paramedics and health workers fighting Covid-19",
-      "The British Empire",
-      "Those who have lost their lives in the line of duty"
+      "Celebration of the Indian Republic Day",
+      "Remembrance and tribute to freedom fighters",
+      "A day marking the end of British rule in India",
+      "Observation of the Independence Day of Pakistan"
     ],
-    "answer": "Those who have lost their lives in the line of duty"
+    "answer": "C"
   },
   {
-    "question": "What is the significance of 15th August in this context?",
+    "question": "Who are being paid homage on this day?",
     "options": [
-      "A day for foreign invasion celebration",
-      "A day for re-dedicating oneself to the cause of society and nation",
-      "A day for honoring the British Empire",
-      "A day for celebrating Covid-19"
+      "Only the leaders whose names appear in history lessons",
+      "The common people who participated in the struggle at the grass-root level",
+      "Just the heroes and heroines with extraordinary contributions",
+      "Both the leaders and the common people who participated in the freedom struggle"
     ],
-    "answer": "A day for re-dedicating oneself to the cause of society and nation"
+    "answer": "B"
   },
   {
-    "question": "Where has Arunachal Pradesh consistently stood in times of danger?",
+    "question": "Why is it important to remember the sacrifices of freedom fighters?",
     "options": [
-      "Against the freedom struggle",
-      "In favor of foreign invasion",
-      "Fighting against Covid-19",
-      "At the forefront in any danger"
+      "To remind us of the hardships they faced for our independence",
+      "To celebrate their achievements and contribution to nation-building",
+      "To motivate future generations to strive for more",
+      "All of the above"
     ],
-    "answer": "At the forefront in any danger"
+    "answer": "D"
   },
   {
-    "question": "Who/What has Arunachal Pradesh's children stood against?",
+    "question": "Who are considered heroes or heroines in the context of this text?",
     "options": [
-      "The freedom struggle of the country",
-      "Foreign invaders",
-      "Covid-19",
-      "Against the society and nation"
+      "Only those who made extraordinary sacrifices during the freedom struggle",
+      "Only leaders whose names appear in history lessons",
+      "All participants in the freedom struggle to their capacity",
+      "Those who rose against foreign oppression and fought for independence"
     ],
-    "answer": "Foreign invaders"
+    "answer": "C"
+  },
+  {
+    "question": "Who or what shook the foundations of the mighty British Empire?",
+    "options": [
+      "A) The Virus in question   B) Arunachal Pradesh's children   C) The freedom struggle participants   D) Foreign invasions"
+    ],
+    "answer": "C"
+  },
+  {
+    "question": "Which group is today putting their lives at risk to give us freedom from the Virus?",
+    "options": [
+      "A) The Virus in question   B) Arunachal Pradesh's children   C) The freedom struggle participants   D) Doctors, nurses, paramedics and health workers"
+    ],
+    "answer": "D"
+  },
+  {
+    "question": "Which event is 15th August traditionally associated with?",
+    "options": [
+      "A) Re-dedicating ourselves to the cause of the society and the nation   B) The invasion of foreigners   C) The fight against Covid   D) Remembering the sacrifices made by heroes"
+    ],
+    "answer": "A"
+  },
+  {
+    "question": "Who are the nation expected to recognize for their sacrifice in a fitting manner?",
+    "options": [
+      "A) The Virus in question   B) Arunachal Pradesh's children   C) The freedom struggle participants   D) Doctors, nurses, paramedics and health workers who have lost their lives"
+    ],
+    "answer": "D"
+  },
+  {
+    "question": "Where did Arunachal Pradesh stand in the face of any danger, according to the text?",
+    "options": [
+      "A) The Virus in question   B) The freedom struggle participants   C) Foreign invasions   D) In the forefront"
+    ],
+    "answer": "D"
   }
 ]
