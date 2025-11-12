@@ -1,0 +1,104 @@
+# =========================
+# General OS / Editor Junk
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+
+# =========================
+# Python Backend (FastAPI)
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.env
+.env.*
+.venv/
+venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Python build artifacts
+build/
+dist/
+.eggs/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+.tox/
+*.egg
+*.manifest
+*.spec
+
+# FastAPI / LangChain output + generated data
+backend/outputs/
+backend/__pycache__/
+backend/.idea/
+backend/.vscode/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/.coverage
+backend/*faiss_index*
+backend/chunks.json
+backend/reader_summary.json
+
+# Model checkpoints or fine-tuned weights
+*.pt
+*.bin
+*.ckpt
+*.h5
+*.pkl
+
+# =========================
+# Node Frontend (React + Vite)
+# =========================
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.*
+frontend/.DS_Store
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/package-lock.json
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.code-workspace
+
+# =========================
+# System files / temporary
+# =========================
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+*.bak
+*.old
+*.orig
+
+# =========================
+# Git / Config
+# =========================
+# keep .gitignore itself
+!.gitignore
