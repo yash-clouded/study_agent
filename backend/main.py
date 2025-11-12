@@ -20,21 +20,24 @@ from dotenv import load_dotenv
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from utils.google_llm import create_google_llm
+from utils.ollama_llm import create_ollama_llm
 
 # Load environment variables from .env file explicitly
 env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
 load_dotenv(dotenv_path=env_path)
 
-# Check for API keys
+# Check for API keys and LLM preferences
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+USE_OLLAMA = os.environ.get("USE_OLLAMA", "false").lower() == "true"
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "mistral")
 
-# Determine which LLM to use: prefer Google Gemini if key is set, otherwise use OpenAI
-USE_GOOGLE = bool(GOOGLE_API_KEY)
-USE_OPENAI = bool(OPENAI_API_KEY)
+# Determine which LLM to use: priority order is Ollama > Google Gemini > OpenAI
+USE_GOOGLE = bool(GOOGLE_API_KEY) and not USE_OLLAMA
+USE_OPENAI = bool(OPENAI_API_KEY) and not USE_GOOGLE and not USE_OLLAMA
 
-if not (USE_GOOGLE or USE_OPENAI):
-    raise Exception("Set either GOOGLE_API_KEY or OPENAI_API_KEY in environment")
+if not (USE_GOOGLE or USE_OPENAI or USE_OLLAMA):
+    raise Exception("Set either GOOGLE_API_KEY, OPENAI_API_KEY, or USE_OLLAMA=true in environment")
 
 FAISS_INDEX_PATH = os.environ.get("FAISS_INDEX_PATH", "./outputs/faiss_index")
 
@@ -49,8 +52,21 @@ app.add_middleware(
 # instantiate agents
 reader = ReaderAgent()
 
-# Choose LLM provider: Google Gemini if available, fallback to OpenAI
-if USE_GOOGLE:
+# Choose LLM provider: Ollama if enabled, then Google Gemini, fallback to OpenAI
+if USE_OLLAMA:
+    try:
+        print(f"***Using Ollama as LLM provider with model: {OLLAMA_MODEL}")
+        llm = create_ollama_llm(model=OLLAMA_MODEL)
+    except RuntimeError as e:
+        print(f"***Ollama error: {e}")
+        print("***Falling back to Google Gemini or OpenAI...")
+        if USE_GOOGLE:
+            print("***Using Google Gemini as fallback")
+            llm = create_google_llm()
+        else:
+            print("***Using OpenAI as fallback")
+            llm = ChatOpenAI(model_name=os.environ.get("LLM_MODEL", "gpt-4o-mini"), temperature=0.1)
+elif USE_GOOGLE:
     print("***Using Google Gemini as LLM provider")
     llm = create_google_llm()
 else:

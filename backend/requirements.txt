@@ -20,3 +20,6 @@ tiktoken
 # OpenAI provider for LangChain (new package for ChatOpenAI and OpenAIEmbeddings)
 langchain-openai
 google-generativeai
+
+# Ollama support for running models locally
+ollama

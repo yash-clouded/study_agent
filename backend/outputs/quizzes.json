@@ -1,152 +1,102 @@
 [
   {
-    "question": "What significant event is being celebrated on the auspicious morning mentioned in the speech?",
+    "question": "What event is being celebrated on August 15th in this speech?",
     "options": [
-      "A) Republic Day",
-      "B) Independence Day",
-      "C) Gandhi Jayanti",
-      "D) Foundation Day of RGU"
+      "New Year's Day",
+      "Republic Day",
+      "Independence Day",
+      "Labor Day"
     ],
-    "answer": "B"
+    "answer": "Independence Day"
   },
   {
-    "question": "According to the text, which anniversary of Independence Day is being celebrated?",
+    "question": "Who unfurled the tri-color flag on Red Fort on Independence Day in 1947?",
     "options": [
-      "A) 73rd",
-      "B) 74th",
-      "C) 75th",
-      "D) 70th"
+      "Mahatma Gandhi",
+      "Pt. Jawaharlal Nehru",
+      "Subhas Chandra Bose",
+      "B.R. Ambedkar"
     ],
-    "answer": "B"
+    "answer": "Pt. Jawaharlal Nehru"
   },
   {
-    "question": "Who was the first Prime Minister of India to unfurl the tri-colour atop the Red Fort in Delhi?",
+    "question": "Which of the following individuals is NOT mentioned in this speech as being present on Independence Day?",
     "options": [
-      "A) Mahatma Gandhi",
-      "B) Sardar Vallabhbhai Patel",
-      "C) Pt. Jawaharlal Nehru",
-      "D) Subhas Chandra Bose"
+      "Dr. N. T. Jose",
+      "Prof. Amitava Mitra",
+      "B.R. Ambedkar",
+      "Subhas Chandra Bose"
     ],
-    "answer": "C"
+    "answer": "B.R. Ambedkar"
   },
   {
-    "question": "In what year did India gain freedom from colonial rule, as stated in the speech?",
+    "question": "Which of the following is NOT a role mentioned in this speech on Independence Day?",
     "options": [
-      "A) 1950",
-      "B) 1942",
-      "C) 1947",
-      "D) 1965"
+      "Campus dweller",
+      "Teacher",
+      "Cleaning staff",
+      "Head chef"
     ],
-    "answer": "C"
+    "answer": "Head chef"
   },
   {
-    "question": "Besides marking freedom, what is another purpose of 15th August mentioned in the text?",
+    "question": "What is the significance of August 15th in this speech?",
     "options": [
-      "A) To elect new government officials",
-      "B) To remember the contributions of freedom fighters",
-      "C) To launch new national projects",
-      "D) To celebrate the country's economic growth"
+      "It marks the founding of the Republic of India",
+      "It celebrates the birth of Pt. Jawaharlal Nehru",
+      "It commemorates the contributions of freedom fighters",
+      "It honors the labor movement"
     ],
-    "answer": "B"
+    "answer": "It commemorates the contributions of freedom fighters"
   },
   {
-    "question": "According to the text, what is one of the primary purposes of 15th August?",
+    "question": "Who/What is everyone worthy to be remembered, celebrated and paid homage for in this context?",
     "options": [
-      "A) To celebrate the formation of a new government.",
-      "B) To remember the contributions of freedom fighters and re-dedicate to the nation's service.",
-      "C) To plan future economic strategies for the country.",
-      "D) To honor only the leaders mentioned in history books."
+      "Foreign invaders",
+      "Doctors, nurses, paramedics and health workers fighting Covid-19",
+      "The British Empire",
+      "Participants in the freedom struggle"
     ],
-    "answer": "B"
+    "answer": "Participants in the freedom struggle"
   },
   {
-    "question": "Why did the leaders and warriors sacrifice their sweat and blood, as stated in the text?",
+    "question": "For whom is the nation expected to recognize sacrifice 'in a fitting manner'?",
     "options": [
-      "A) To establish a new global empire.",
-      "B) So that they and their future generations may breathe the air of independence free from foreign colonial oppression.",
-      "C) To secure personal wealth and power for themselves.",
-      "D) To form alliances with other nations."
+      "Foreign invaders",
+      "Doctors, nurses, paramedics and health workers fighting Covid-19",
+      "The British Empire",
+      "Those who have lost their lives in the line of duty"
     ],
-    "answer": "B"
+    "answer": "Those who have lost their lives in the line of duty"
   },
   {
-    "question": "Besides the leaders whose names appear in history lessons, who else does the text emphasize should be remembered and paid homage to?",
+    "question": "What is the significance of 15th August in this context?",
     "options": [
-      "A) Only the most prominent military generals.",
-      "B) Foreign dignitaries who supported the cause.",
-      "C) The common people who participated in the struggle at the grass-root level.",
-      "D) Current government officials."
+      "A day for foreign invasion celebration",
+      "A day for re-dedicating oneself to the cause of society and nation",
+      "A day for honoring the British Empire",
+      "A day for celebrating Covid-19"
     ],
-    "answer": "C"
+    "answer": "A day for re-dedicating oneself to the cause of society and nation"
   },
   {
-    "question": "How does the text characterize everyone who participated in the freedom struggle to one's capacity?",
+    "question": "Where has Arunachal Pradesh consistently stood in times of danger?",
     "options": [
-      "A) As minor contributors with limited impact.",
-      "B) As historical figures only relevant for academic study.",
-      "C) As a hero or a heroine worthy to be remembered, celebrated and paid homage.",
-      "D) As individuals who merely followed orders."
+      "Against the freedom struggle",
+      "In favor of foreign invasion",
+      "Fighting against Covid-19",
+      "At the forefront in any danger"
     ],
-    "answer": "C"
+    "answer": "At the forefront in any danger"
   },
   {
-    "question": "What 'yoke' did the freedom fighters aim to free India from, according to the text?",
+    "question": "Who/What has Arunachal Pradesh's children stood against?",
     "options": [
-      "A) Internal political disputes.",
-      "B) Economic hardship and poverty.",
-      "C) The yoke of foreign colonial oppression.",
-      "D) Natural disasters and famines."
+      "The freedom struggle of the country",
+      "Foreign invaders",
+      "Covid-19",
+      "Against the society and nation"
     ],
-    "answer": "C"
-  },
-  {
-    "question": "According to the text, how should participants in the freedom struggle be regarded?",
-    "options": [
-      "A) As individuals whose contributions are no longer relevant.",
-      "B) As heroes or heroines worthy to be remembered, celebrated, and paid homage.",
-      "C) As figures who only shook the foundations of the British Empire.",
-      "D) As people who should be forgotten over time."
-    ],
-    "answer": "B"
-  },
-  {
-    "question": "Who are specifically mentioned as putting their lives at risk to give freedom from the Virus?",
-    "options": [
-      "A) Soldiers and police officers.",
-      "B) Politicians and government officials.",
-      "C) Doctors, nurses, paramedics, and health workers.",
-      "D) Teachers and students."
-    ],
-    "answer": "C"
-  },
-  {
-    "question": "What does the text suggest the nation should do for those who lost their lives in the line of duty against the Virus?",
-    "options": [
-      "A) Ignore their contributions.",
-      "B) Blame them for the situation.",
-      "C) Recognize their sacrifice in a fitting manner.",
-      "D) Only remember them privately."
-    ],
-    "answer": "C"
-  },
-  {
-    "question": "In what ways has Arunachal Pradesh's participation been highlighted in the text?",
-    "options": [
-      "A) Only in the fight against Covid.",
-      "B) Only during the invasion of foreigners.",
-      "C) In the freedom struggle, against foreign invasion, and in the fight against Covid.",
-      "D) By shaking the foundations of the British Empire."
-    ],
-    "answer": "C"
-  },
-  {
-    "question": "What is the significance of 15th August, according to the provided text?",
-    "options": [
-      "A) A day to forget past struggles.",
-      "B) A time for re-dedicating oneself to the cause of society and the nation.",
-      "C) A day solely for celebrating the British Empire.",
-      "D) A time to criticize national efforts."
-    ],
-    "answer": "B"
+    "answer": "Foreign invaders"
   }
 ]
