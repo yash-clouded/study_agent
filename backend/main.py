@@ -17,11 +17,24 @@ from langchain.docstore.document import Document
 from langchain_openai import ChatOpenAI
 
 from dotenv import load_dotenv
-load_dotenv()
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from utils.google_llm import create_google_llm
 
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
-if not OPENAI_KEY:
-    raise Exception("Set OPENAI_API_KEY in environment")
+# Load environment variables from .env file explicitly
+env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
+load_dotenv(dotenv_path=env_path)
+
+# Check for API keys
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+
+# Determine which LLM to use: prefer Google Gemini if key is set, otherwise use OpenAI
+USE_GOOGLE = bool(GOOGLE_API_KEY)
+USE_OPENAI = bool(OPENAI_API_KEY)
+
+if not (USE_GOOGLE or USE_OPENAI):
+    raise Exception("Set either GOOGLE_API_KEY or OPENAI_API_KEY in environment")
 
 FAISS_INDEX_PATH = os.environ.get("FAISS_INDEX_PATH", "./outputs/faiss_index")
 
@@ -35,8 +48,19 @@ app.add_middleware(
 
 # instantiate agents
 reader = ReaderAgent()
-llm = ChatOpenAI(model_name=os.environ.get("LLM_MODEL", "gpt-4o-mini"), temperature=0.1)
+
+# Choose LLM provider: Google Gemini if available, fallback to OpenAI
+if USE_GOOGLE:
+    print("***Using Google Gemini as LLM provider")
+    llm = create_google_llm()
+else:
+    print("***Using OpenAI as LLM provider")
+    llm = ChatOpenAI(model_name=os.environ.get("LLM_MODEL", "gpt-4o-mini"), temperature=0.1)
+
+# Always use OpenAI embeddings (for now, unless you also configure Google embeddings)
 embeddings = OpenAIEmbeddings()
+
+# Instantiate agents - they will use the LLM we created
 flash_agent = FlashcardAgent(llm=llm)
 quiz_agent = QuizAgent(llm=llm)
 planner_agent = PlannerAgent()

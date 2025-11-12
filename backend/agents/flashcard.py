@@ -3,7 +3,12 @@ import json
 import re
 from langchain import LLMChain, PromptTemplate
 from langchain_openai import ChatOpenAI
-from ..utils.google_llm import create_google_llm
+
+# Use absolute import for the utils module
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.google_llm import create_google_llm
 
 FLASH_PROMPT = """You are a flashcard generator.
 Given the following text chunk, produce between 1 and 6 question-answer pairs and return them as a valid JSON array (only the JSON array, nothing else).

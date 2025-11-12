@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.crt
+
+# Node/Frontend
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+.next/
+
+# Build outputs
+*.log
+*.pot
+
+# API keys and credentials (NEVER commit these)
+GOOGLE_API_KEY
+google-credentials.json
+service-account-key.json
+
+# FAISS indexes (large binary files)
+*.faiss
+*.pkl
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+outputs/
+*/outputs/*
+*.bak

@@ -3,7 +3,12 @@ import json
 import re
 from langchain import LLMChain, PromptTemplate
 from langchain_openai import ChatOpenAI
-from ..utils.google_llm import create_google_llm
+
+# Use absolute import for the utils module
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.google_llm import create_google_llm
 
 QUIZ_PROMPT = """
 You are a quiz (MCQ) generator.
